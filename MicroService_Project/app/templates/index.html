@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FlaskApp</title>
+</head>
+<body>
+      <div class="container">
+      <h1>Please login</h1>
+      <br>
+      <form action="" method="post">
+        <input type="text" placeholder="Username" name="username" value="{{
+          request.form.username }}">
+         <input type="password" placeholder="Password" name="password" value="{{
+          request.form.password }}">
+        <input class="btn btn-default" type="submit" value="Login">
+      </form>
+      {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}
+      {% endif %}
+      {% if go %}
+        <p class="error"><strong>connexion réussie</strong> {{ go }}
+      {% endif %}
+    </div>
+
+    <div style="width: 50%; margin: auto">
+      <h1>Liste des Login/mdp dans la table : </h1>
+      {% for tex in text %}
+        <div style="padding: 10px; background-color: #EEE; margin: 20px">
+            <p style="font-size: 24px">{{tex}}</p>
+        </div>
+     {% endfor %}
+        
+    </div>    
+</body>
+</html>

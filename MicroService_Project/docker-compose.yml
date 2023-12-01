@@ -1,13 +1,30 @@
-version: '3'
+version: "2"
 services:
-    web:
-        build: ./app
-        ports:
-            - "5000:5000"
-        volumes:
-            - ./app:/app
-        depends_on:
-            - redis-container
+  app:
+    build: ./app
+    links:
+      - db
+    ports:
+      - "5000:5000"
+  db:
+    image: mysql:5.7
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/certificates:/etc/ssl/certs:ro
+    links:
+      - app
+    depends_on:
+      - app
 
-    redis-container:
-        image: redis
+
